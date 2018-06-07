@@ -34,6 +34,11 @@ class Game extends Component {
     if(nextProps.player.playerOne != null){
       this.setState({playerOneId: nextProps.player.playerOne.playerOneId, playerOneName: nextProps.player.playerOne.playerOneName, playerTwoId: nextProps.player.playerTwo.playerTwoId, playerTwoName: nextProps.player.playerTwo.playerTwoName })
     }
+    console.log(nextProps)
+    if (nextProps.winner != -1) {
+      this.setState({showDialog: true})
+    }
+
   }
 
   updatePlayerState(playerInfo) {
@@ -62,12 +67,15 @@ class Game extends Component {
       }
     }
 
-    playTurn(player, row, col, this.state, board);
-    const hasWinner = checkWinner(board, player);
+    // console.log(playTurn(player, row, col, this.state, board));
+    playTurn(player, row, col, this.state, board)
+    
+    // const hasWinner = checkWinner(board, player);
 
-    // if (hasWinner) {
-    //   this.setState({ showDialog: true });
+    // if (hasWinner == true) {
+    //   this.setState({showDialog: true})
     // }
+  
   }
 
   handleDialogClick(answer) {
@@ -83,6 +91,7 @@ class Game extends Component {
   }
 
   render() {
+    // console.log(this.props)
 
     const { showDialog } = this.state;
     const { board, player, gameover, winner } = this.props;

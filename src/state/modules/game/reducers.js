@@ -56,6 +56,7 @@ const gameoverReducer = (state = false, action) => {
 const winnerReducer = (state = -1, action) => {
   switch (action.type) {
     case types.WINNER:
+    // console.log(action)
       return action.payload;
     case types.NEW_GAME:
       return -1;

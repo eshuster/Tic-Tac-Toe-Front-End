@@ -25,6 +25,8 @@ const winner = player => ({
   payload: player
 });
 
+
+
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);

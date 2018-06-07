@@ -31,15 +31,8 @@ const checkWinner = (board, player) => (dispatch) => {
   let hasWinner = true;
 
   if (isWinner(board, player)) {
-
-    // axios
-
-
     dispatch(winner(player));
     dispatch(gameover());
-
-
-
 
   } else if (isDraw(board)) {
     dispatch(winner(0));
@@ -59,6 +52,7 @@ const checkWinner = (board, player) => (dispatch) => {
  * @param {number} col The column on the board
  */
 const playTurn = (player, row, col, playerInfo, board) => (dispatch) => {
+
   if (board[row][col]['player_id'] == null) {
 
     let nextPlayer;
@@ -70,8 +64,22 @@ const playTurn = (player, row, col, playerInfo, board) => (dispatch) => {
         axios.post('http://tictactorevere.herokuapp.com/board/select_position', {'player_id': player.playerOneId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
         // axios.post('http://127.0.0.1:5000/board/select_position', {'player_id': player.playerOneId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
         .then(function(response){
-          console.log(response)
+          // console.log(response)
           dispatch(movePlayer(board));
+
+          if (response.data.winner == true){
+            // hasWinner = true;
+            console.log("Winner is Player ONE")
+
+            dispatch(winner(player.playerOneId))
+            dispatch(gameover());
+            // return true
+
+          }
+          else {
+            console.log("false")
+            // return false;
+          }
         })
         .catch(function(error) {
           console.log(error)
@@ -85,8 +93,22 @@ const playTurn = (player, row, col, playerInfo, board) => (dispatch) => {
         axios.post('http://tictactorevere.herokuapp.com', {'player_id': player.playerTwoId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
         // axios.post('http://127.0.0.1:5000/board/select_position', {'player_id': player.playerTwoId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
         .then(function(response){
-          console.log(response)
+         // console.log(response)/
           dispatch(movePlayer(board));
+
+          if (response.data.winner == true){
+
+            console.log("Winner is Player Two")
+            // console.log(player)
+            dispatch(winner(player.playerTwoId))
+            dispatch(gameover());
+            // return true
+
+
+          }
+          else {
+            console.log("false")
+          }
         })
         .catch(function(error) {
           console.log(error)
@@ -95,7 +117,9 @@ const playTurn = (player, row, col, playerInfo, board) => (dispatch) => {
     
     dispatch(switchPlayer(nextPlayer));
   }
-
+    // setTimeout(function(){
+    //   return hasWinner;
+    // }, 2000)
 };
 
 export {
