@@ -20,9 +20,11 @@ module.exports = {
         ]
     },
     output: {
-        // publicPath: '/dist/',
+        publicPath: '/dist/',
         path: parentDir + '/dist',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+            // publicPath: '/public/'
+
     },
     plugins: [
         // Here we are taking the template found in 'src/index.html' and injecting our bundles

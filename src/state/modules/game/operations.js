@@ -31,8 +31,16 @@ const checkWinner = (board, player) => (dispatch) => {
   let hasWinner = true;
 
   if (isWinner(board, player)) {
+
+    // axios
+
+
     dispatch(winner(player));
     dispatch(gameover());
+
+
+
+
   } else if (isDraw(board)) {
     dispatch(winner(0));
     dispatch(gameover());
@@ -59,7 +67,8 @@ const playTurn = (player, row, col, playerInfo, board) => (dispatch) => {
         nextPlayer = {'playerTwoId': playerInfo.playerTwoId, 'playerTwoName': playerInfo.playerTwoName};
         board[row][col]['player_id'] = player.playerOneId;
 
-        axios.post('http://127.0.0.1:5000/board/select_position', {'player_id': player.playerOneId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
+        axios.post('http://tictactorevere.herokuapp.com/board/select_position', {'player_id': player.playerOneId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
+        // axios.post('http://127.0.0.1:5000/board/select_position', {'player_id': player.playerOneId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
         .then(function(response){
           console.log(response)
           dispatch(movePlayer(board));
@@ -73,7 +82,8 @@ const playTurn = (player, row, col, playerInfo, board) => (dispatch) => {
         nextPlayer = {'playerOneId': playerInfo.playerOneId, 'playerOneName': playerInfo.playerOneName};
         board[row][col]['player_id'] = player.playerTwoId;
 
-        axios.post('http://127.0.0.1:5000/board/select_position', {'player_id': player.playerTwoId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
+        axios.post('http://tictactorevere.herokuapp.com', {'player_id': player.playerTwoId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
+        // axios.post('http://127.0.0.1:5000/board/select_position', {'player_id': player.playerTwoId, 'cell_id': board[row][col]['cell_id'], 'board_id': board[row][col]['board_id']})
         .then(function(response){
           console.log(response)
           dispatch(movePlayer(board));
