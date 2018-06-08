@@ -23,7 +23,7 @@ module.exports = {
         // publicPath: '/dist/',
         path: parentDir + '/dist',
         filename: 'bundle.js',
-            // publicPath: '/public/'
+        // publicPath: '/public/'
 
     },
     plugins: [

@@ -25,8 +25,6 @@ const winner = player => ({
   payload: player
 });
 
-
-
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
@@ -35,15 +33,15 @@ function handleErrors(response) {
 }
 
 const loadNewGame = (gameName, playerOneName, playerTwoName) => {
-  return dispatch => {
-    axios.post("http://tictactorevere.herokuapp.com/game/new_game", {'name': gameName})
-    // axios.post("http://127.0.0.1:5000/game/new_game", {'name': gameName})
+  return dispatch => { 
+    // axios.post("http://tictactorevere.herokuapp.com/game/new_game", {'name': gameName})
+    axios.post("http://127.0.0.1:5000/game/new_game", {'name': gameName})
     .then(function (response) {
       const newGameResponse = response;
       const gameId = newGameResponse.data[0].game_id;
 
-      axios.post("http://tictactorevere.herokuapp.com/player/create_players", {'playerOneName': playerOneName, 'playerTwoName': playerTwoName, 'gameId': gameId})      
-      // axios.post("http://127.0.0.1:5000/player/create_players", {'playerOneName': playerOneName, 'playerTwoName': playerTwoName, 'gameId': gameId})      
+      // axios.post("http://tictactorevere.herokuapp.com/player/create_players", {'playerOneName': playerOneName, 'playerTwoName': playerTwoName, 'gameId': gameId})      
+      axios.post("http://127.0.0.1:5000/player/create_players", {'playerOneName': playerOneName, 'playerTwoName': playerTwoName, 'gameId': gameId})      
       .then(function (response) {
         const createPlayersResponse = response.data;
         const playerOne = {'playerOneId': createPlayersResponse.playerOneId, 'playerOneName' : createPlayersResponse.playerOneName }

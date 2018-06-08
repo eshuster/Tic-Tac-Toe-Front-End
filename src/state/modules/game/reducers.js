@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 
 import * as types from './types';
 import * as actions from './actions';
+import initialState from './initialState';
+
 
 import { newGame, gameover, switchPlayer, winner, movePlayer, loadNewGame } from './actions';
 
@@ -53,10 +55,18 @@ const gameoverReducer = (state = false, action) => {
   }
 };
 
+const gameFormReducer = (state = initialState.playerInfo, action) => {
+  switch (action.type) {
+    case types.NEW_GAME_AND_PLAYER:
+      return state;
+    default:
+      return state;
+  }
+};
+
 const winnerReducer = (state = -1, action) => {
   switch (action.type) {
     case types.WINNER:
-    // console.log(action)
       return action.payload;
     case types.NEW_GAME:
       return -1;
@@ -66,11 +76,14 @@ const winnerReducer = (state = -1, action) => {
 };
 
 const playerReducer = (state = 0, action) => {
-  // TODO: we should abstract out the player into an enumeration, { NONE: 0, Player1: 1, Player2: 2 }
   switch (action.type) {
     case types.PLAYER:
       return action.payload;
     case types.NEW_GAME:
+      initialState.playerInfo.playerOneId = action.payload.playerOne.playerOneId
+      initialState.playerInfo.playerOneName = action.payload.playerOne.playerOneName
+      initialState.playerInfo.playerTwoId =  action.payload.playerTwo.playerTwoId
+      initialState.playerInfo.playerTwoName = action.payload.playerTwo.playerTwoName
       return action.payload;
     default:
       return state;
@@ -81,5 +94,7 @@ export default combineReducers({
   board: boardReducer,
   gameover: gameoverReducer,
   winner: winnerReducer,
-  player: playerReducer
+  player: playerReducer,
+  gameForm: gameFormReducer
+
 });

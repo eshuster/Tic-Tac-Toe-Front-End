@@ -13,12 +13,8 @@ const Menu = ({ open, onItemClick, onClose, onChange, onSave }) => {
     <Drawer open={open} onClose={onClose} anchor="top">
       <List>
         <ListItem >
-          <ListItemIcon>
-            <Icon>fiber_new</Icon>
-          </ListItemIcon>
-          <ListItemText>New game</ListItemText>
+          <GameForm onChange={onChange} onSave={onSave}/>
         </ListItem>
-        <GameForm onChange={onChange} onSave={onSave}/>
       </List>
     </Drawer>
    

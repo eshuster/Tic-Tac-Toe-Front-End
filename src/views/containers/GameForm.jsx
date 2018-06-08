@@ -9,24 +9,29 @@ class GameForm extends Component {
 	constructor(props, context) {
 		super(props, context);
   	}
+
 	render() {
 		return (
       		<div>
 	        	<form>
 					<TextInput
 			            name="gameName"
+			            label="Game Name"
 			            value={this.props.name}
 			            onChange={this.props.onChange} />
 		            <TextInput
 			            name="playerOneName"
+			            label="Player One Name"
 			            value={this.props.name}
 			            onChange={this.props.onChange} />
 		            <TextInput
 			            name="playerTwoName"
+			            label="Player Two Name"
 			            value={this.props.name}
 			            onChange={this.props.onChange} />
 		            <input
 			            type="submit"
+			            value="New Game"
 			            className="btn btn-primary"
 			            onClick={this.props.onSave} />
 	            </form>
@@ -39,7 +44,22 @@ const { string } = PropTypes;
 
 GameForm.propTypes = {
 	onChange: PropTypes.func,
-	onSave: PropTypes.func.isRequired
+	onSave: PropTypes.func.isRequired,
+	gameName: PropTypes.string,
+	playerOneName: PropTypes.string,
+	playerTwoName: PropTypes.string
 }
 
-export default connect(null, null)(GameForm)
+const mapStateToProps = (state) => {
+  const { gameState } = state;
+
+  return {
+    gameName: gameState.gameName,
+    playerOneName: gameState.playerOneName,
+    playerTwoName: gameState.playerTwoName,
+  };
+};
+
+
+
+export default connect(mapStateToProps)(GameForm)

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TitleBar from './TitleBar.jsx';
+import { configureStore } from '../../state/store';
 
 import Grid from 'material-ui/Grid';
 
@@ -33,19 +34,22 @@ class Game extends Component {
   componentWillReceiveProps(nextProps){
     if(nextProps.player.playerOne != null){
       this.setState({playerOneId: nextProps.player.playerOne.playerOneId, playerOneName: nextProps.player.playerOne.playerOneName, playerTwoId: nextProps.player.playerTwo.playerTwoId, playerTwoName: nextProps.player.playerTwo.playerTwoName })
+      nextProps.player = {playerOneId: nextProps.player.playerOne.playerOneId, playerOneName: nextProps.player.playerOne.playerOneName, playerTwoId: nextProps.player.playerTwo.playerTwoId, playerTwoName: nextProps.player.playerTwo.playerTwoName }
     }
-    console.log(nextProps)
+
     if (nextProps.winner != -1) {
       this.setState({showDialog: true})
     }
 
   }
 
-  updatePlayerState(playerInfo) {
-
-  }
-
   handleBoardOnMove(square) {
+    const initialState = null;
+    const store = configureStore(initialState || {});
+    // console.log("-------------------------------------");
+    // console.log(store);
+    // console.log(store.getState())
+    // console.log("-------------------------------------");
     const { board, gameover, playTurn, checkWinner } = this.props;
     const { row, col } = square;
    
@@ -67,20 +71,17 @@ class Game extends Component {
       }
     }
 
-    // console.log(playTurn(player, row, col, this.state, board));
-    playTurn(player, row, col, this.state, board)
-    
+    playTurn(player, row, col, this.state, board)    
     // const hasWinner = checkWinner(board, player);
 
     // if (hasWinner == true) {
     //   this.setState({showDialog: true})
     // }
-  
   }
 
   handleDialogClick(answer) {
     if (answer) {
-      this.props.newGame();
+      this.props.loadNewGame(this.state.gameName + ".1", this.state.playerOneName, this.state.playerTwoName);
     }
 
     this.setState({ showDialog: false });
@@ -91,12 +92,9 @@ class Game extends Component {
   }
 
   render() {
-    // console.log(this.props)
-
     const { showDialog } = this.state;
     const { board, player, gameover, winner } = this.props;
     const draw = winner === 0;
-
     return (
       <div>
         <TitleBar updatePlayerInfo={this.updatePlayerState} />
@@ -119,14 +117,13 @@ class Game extends Component {
   }
 }
 
-const { arrayOf, number, func, bool, object } = PropTypes;
+const { arrayOf, number, func, bool, object, string } = PropTypes;
 
 // we want to list our props for validation even though 
 // we are using react-redux to map our state and dispatch
 // to the props of this Game component
 Game.propTypes = {
   board: arrayOf(arrayOf(PropTypes.object)).isRequired,
-  // board: arrayOf(arrayOf(number)).isRequired,
   player: number.isRequired,
   winner: number.isRequired,
   gameover: bool.isRequired,
@@ -144,6 +141,9 @@ const mapStateToProps = (state) => {
     player: gameState.player,
     gameover: gameState.gameover,
     winner: gameState.winner
+    // gameName: gameState.gameName,
+    // playerOneName: gameState.playerOneName,
+    // playerTwoName: gameState.playerTwoName,
   };
 };
 

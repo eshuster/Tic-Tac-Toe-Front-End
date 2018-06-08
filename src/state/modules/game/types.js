@@ -8,6 +8,7 @@ const MOVE = 'GAME_MOVE';
 const MOVECOUNT = 'GAME_MOVECOUNT';
 const PLAYER = 'GAME_PLAYER';
 const WINNER = 'GAME_WINNER';
+const NEW_GAME_AND_PLAYER = 'NEW_GAME_AND_PLAYER';
 
 export {
   NEW_GAME,
@@ -15,5 +16,6 @@ export {
   MOVE,
   MOVECOUNT,
   PLAYER,
-  WINNER
+  WINNER,
+  NEW_GAME_AND_PLAYER
 };

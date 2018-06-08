@@ -23,7 +23,9 @@ const PlayerInfo = ({ player, gameover }) => {
     <div>
       <Typography variant="headline">
         {gameover && "Gameover!"}
-        {!gameover && `PlayerName: ${playerName}` && `PlayerId: ${playerId}`}
+        {!gameover && `Player Id: ${playerId}`}
+        <br />
+        {!gameover && `Player Name: ${playerName}`}
       </Typography>
     </div>
   );
